@@ -10,7 +10,18 @@ services:
       - "{{ .Envoy.AdminPort }}:9901"
     depends_on:
       - {{ .Backend.ContainerName }}
+{{- if .Envoy.TLS.Enabled }}
+      - certbot
+{{- end }}
     command: ["envoy", "-c", "/etc/envoy/envoy.yaml"]
   {{ .Backend.ContainerName }}:
     image: "{{ .Backend.Image }}:{{ .Backend.Tag }}"
     command: ["./crossword-game"]
+{{- if .Envoy.TLS.Enabled }}
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./letsencrypt/conf:/etc/letsencrypt
+      - ./letsencrypt/www:/var/www/certbot
+    command: certonly --standalone --email {{ .Envoy.TLS.CertEmail }} -d {{ .Envoy.TLS.CertDomain }} --rsa-key-size 4096 --agree-tos --force-renewal
+{{- end }}
