@@ -16,6 +16,6 @@ CONFIG_FILE="./configs/config-http.yaml" make template
 And then the app can be started with:
 
 ```shell
-cd .out
+cd out
 docker compose start
 ```
