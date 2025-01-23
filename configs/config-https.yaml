@@ -9,7 +9,7 @@ backend:
 envoy:
   image: envoyproxy/envoy
   tag: v1.33-latest
-  port: 80
+  port: 443
   admin_port: 9901
   tls:
     enabled: true
