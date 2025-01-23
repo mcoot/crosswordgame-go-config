@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  envoy:
+    image: "{{ .Envoy.Image }}:{{ .Envoy.Tag }}"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "{{ .Envoy.Port }}:10000"
+      - "{{ .Envoy.AdminPort }}:9901"
+    depends_on:
+      - {{ .Backend.ContainerName }}
+    command: ["envoy", "-c", "/etc/envoy/envoy.yaml"]
+  {{ .Backend.ContainerName }}:
+    image: "{{ .Backend.Image }}:{{ .Backend.Tag }}"
+    command: ["./crossword-game"]

@@ -22,7 +22,7 @@ static_resources:
               domains: ["*"]
               routes:
               - match: { prefix: "/" }
-                route: { cluster: crossword-game }
+                route: { cluster: backend }
           http_filters:
           - name: envoy.filters.http.router
             typed_config:
@@ -32,25 +32,25 @@ static_resources:
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
   clusters:
-  - name: crossword-game
+  - name: backend
     type: STRICT_DNS
     lb_policy: ROUND_ROBIN
     load_assignment:
-      cluster_name: crossword-game
+      cluster_name: backend
       endpoints:
       - lb_endpoints:
         - endpoint:
             address:
               socket_address:
-                address: crossword-game
-                port_value: 8080
+                address: {{ .Backend.ContainerName }}
+                port_value: {{ .Backend.Port }}
     health_checks:
     - timeout: 1s
       interval: 10s
       unhealthy_threshold: 2
       healthy_threshold: 2
       http_health_check:
-        path: "/api/v1/health"
+        path: "{{ .Backend.HealthcheckPath }}"
         expected_statuses:
         - start: 200
           end: 201
