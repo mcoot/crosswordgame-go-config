@@ -15,3 +15,7 @@ renew-cert: dirs template
 .PHONY: run
 run: dirs template
 	cd ./out && docker compose up -d
+
+.PHONY: stop
+stop:
+	cd ./out && docker compose down
