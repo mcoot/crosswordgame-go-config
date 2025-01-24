@@ -8,10 +8,11 @@ services:
     ports:
       - "{{ .Envoy.Port }}:10000"
       - "{{ .Envoy.AdminPort }}:9901"
-    resources:
-      limits:
-        cpus: '0.5'
-        memory: 256M
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
     depends_on:
       - {{ .Backend.ContainerName }}
 {{- if .Envoy.TLS.Enabled }}
@@ -21,10 +22,11 @@ services:
   {{ .Backend.ContainerName }}:
     image: "{{ .Backend.Image }}:{{ .Backend.Tag }}"
     command: ["./crossword-game"]
-    resources:
-      limits:
-        cpus: '0.5'
-        memory: 256M
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
 {{- if .Envoy.TLS.Enabled }}
   certbot:
     image: certbot/certbot
