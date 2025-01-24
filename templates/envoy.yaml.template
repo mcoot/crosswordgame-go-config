@@ -39,9 +39,9 @@ static_resources:
           common_tls_context:
             tls_certificates:
               - certificate_chain:
-                  filename: "/etc/letsencrypt/conf/live/example.org/fullchain.pem"
+                  filename: "/etc/letsencrypt/conf/live/{{ .Envoy.TLS.CertDomain }}/fullchain.pem"
                 private_key:
-                  filename: "/etc/letsencrypt/conf/live/example.org/privkey.pem"
+                  filename: "/etc/letsencrypt/conf/live/{{ .Envoy.TLS.CertDomain }}/privkey.pem"
 {{ end }}
 
   clusters:
