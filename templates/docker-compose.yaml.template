@@ -5,7 +5,7 @@ services:
     image: "{{ .Envoy.Image }}:{{ .Envoy.Tag }}"
     volumes:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
-      - ./letsencrypt:etc/letsencrypt
+      - ./letsencrypt:/etc/letsencrypt
     ports:
       - "{{ .Envoy.Port }}:10000"
       - "{{ .Envoy.AdminPort }}:9901"
