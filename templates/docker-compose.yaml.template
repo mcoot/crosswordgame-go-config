@@ -9,11 +9,14 @@ services:
     ports:
       - "{{ .Envoy.Port }}:10000"
       - "{{ .Envoy.AdminPort }}:9901"
+    restart: always
     deploy:
       resources:
         limits:
           cpus: '0.5'
           memory: 256M
+    environment:
+      - "ENVOY_UID=0"
     depends_on:
       - {{ .Backend.ContainerName }}
     command: ["envoy", "-c", "/etc/envoy/envoy.yaml"]
