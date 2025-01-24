@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+{{- if .Envoy.TLS.Enabled }}
+  certbot:
+    image: certbot/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./letsencrypt/conf:/etc/letsencrypt
+      - ./letsencrypt/www:/var/www/certbot
+    command: certonly --standalone --email {{ .Envoy.TLS.CertEmail }} -d {{ .Envoy.TLS.CertDomain }} --rsa-key-size 4096 --agree-tos --force-renewal
+{{- end }}
