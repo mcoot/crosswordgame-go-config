@@ -16,6 +16,10 @@ renew-cert: dirs template
 start: dirs template
 	cd ./out && docker compose up -d
 
+.PHONY: start-attached
+start-attached: dirs template
+	cd ./out && docker compose up
+
 .PHONY: stop
 stop:
 	cd ./out && docker compose down
