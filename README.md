@@ -5,17 +5,24 @@ Config for deploying [crosswordgame-go](https://github.com/mcoot/crosswordgame-g
 Deploys in docker-compose with Envoy in front.
 
 The docker-compose.yaml and envoy.yaml are templated out based on one of the configs 
-in `configs` – with or without TLS.
+in `configs` – with or without TLS. You will want to change the dns/email.
 
-The templating can be done with:
+If using TLS, you should first renew the cert with:
 
 ```shell
-CONFIG_FILE="./configs/config-http.yaml" make template
+export CONFIG_FILE="./configs/config-https.yaml"
+make renew-cert
 ```
 
-And then the app can be started with:
+And then templating will be run and the app started with:
 
 ```shell
-cd out
-docker compose start
+export CONFIG_FILE="./configs/config-https.yaml" # or http if not using TLS
+make run
+```
+
+It can later be stopped with
+
+```shell
+make stop
 ```
