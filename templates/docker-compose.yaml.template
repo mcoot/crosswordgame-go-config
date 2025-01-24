@@ -15,9 +15,6 @@ services:
           memory: 256M
     depends_on:
       - {{ .Backend.ContainerName }}
-{{- if .Envoy.TLS.Enabled }}
-      - certbot
-{{- end }}
     command: ["envoy", "-c", "/etc/envoy/envoy.yaml"]
   {{ .Backend.ContainerName }}:
     image: "{{ .Backend.Image }}:{{ .Backend.Tag }}"
