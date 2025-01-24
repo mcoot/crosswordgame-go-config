@@ -18,7 +18,7 @@ And then templating will be run and the app started with:
 
 ```shell
 export CONFIG_FILE="./configs/config-https.yaml" # or http if not using TLS
-make run
+make start
 ```
 
 It can later be stopped with
