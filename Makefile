@@ -10,7 +10,7 @@ template: dirs
 
 .PHONY: renew-cert
 renew-cert: dirs template
-	cd ./out && docker compose up -f docker-compose-certbot.yml
+	cd ./out && docker compose -f docker-compose-certbot.yml up
 
 .PHONY: run
 run: dirs template
