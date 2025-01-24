@@ -20,6 +20,8 @@ services:
 {{- if .Envoy.TLS.Enabled }}
   certbot:
     image: certbot/certbot
+    ports:
+      - "80:80"
     volumes:
       - ./letsencrypt/conf:/etc/letsencrypt
       - ./letsencrypt/www:/var/www/certbot
